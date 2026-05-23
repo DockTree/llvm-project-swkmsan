@@ -1,3 +1,21 @@
+Todo List:
+
+1. getshadow and getshadoworiginptr -> custom shadow mapping
+   getshadow: -> only bit in byte. same as getCleanShadow, getPoisonShadow
+     For instructions the shadow is already stored in the map. directly compare
+     Handle fully undefined values. directly compare
+     Argument: [main] -> getShadowPtrForArgument, getShadowOriginPtr
+     partial undefined values
+   getShadowPtrForArgument:
+     Value *ContextState = IRB.CreateCall(MS.MsanGetContextStateFn, {});
+     Constant *Zero = IRB.getInt32(0);
+     MS.ParamTLS = IRB.CreateGEP(MS.MsanContextStateTy, ContextState,
+                              {Zero, IRB.getInt32(0)}, "param_shadow");
+   getShadowOriginPtr: vmalloc & module -> mapping
+
+   CreateMemset, CreateMemcpy
+3. compare -> byte to bit
+
 # The LLVM Compiler Infrastructure
 
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/llvm/llvm-project/badge)](https://securityscorecards.dev/viewer/?uri=github.com/llvm/llvm-project)
